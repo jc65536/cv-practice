@@ -11,9 +11,10 @@ class Webcam:
         if not self.video.isOpened():
             raise StopIteration
         
-        ret = False
-        while not ret:
-            ret, frame = self.video.read()
+        ret, frame = self.video.read()
+
+        if not ret:
+            raise StopIteration
         
         return frame
     

@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
 import cv2
+import filters
 
 from webcam import Webcam
 from dotenv import dotenv_values
-from filters import *
+from cvlib import convolve
 
 env = dotenv_values(".env")
 uname = env["uname"]
@@ -18,19 +19,15 @@ webcam = Webcam(url)
 
 window = cv2.namedWindow("window")
 
-filter = gaussian_filter(25, 10)
-print(filter)
+filter = filters.gaussian(11, 20)
+filter = filters.grad_y
 
 for img in webcam:
-    img = convolve(img, filter)
+    img = convolve(img, filters.grad_xy)
 
     cv2.imshow("window", img)
 
-    while True:
-        match cv2.pollKey():
-            case 0x71:  # q
-                webcam.close()
-                break
-
-            case 0x6e: # n
-                break
+    match cv2.pollKey():
+        case 0x71:  # q
+            webcam.close()
+            break

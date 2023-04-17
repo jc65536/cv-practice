@@ -1,0 +1,12 @@
+[package]
+name = "cv-practice"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "cvlib"
+crate-type = ["cdylib"]
+
+[dependencies]
+numpy = "0.18.0"
+pyo3 = "0.18.1"
