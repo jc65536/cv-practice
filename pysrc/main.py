@@ -23,7 +23,7 @@ filter = filters.gaussian(11, 20)
 filter = filters.grad_y
 
 for img in webcam:
-    img = convolve(img, filters.grad_xy)
+    img = convolve(img, filters.grad_xy) * 4
 
     cv2.imshow("window", img)
 

@@ -12,4 +12,4 @@ case $1 in
     profile)
         py-spy record --native -o ignore/profile.svg -- python pysrc/main.py
         ;;
-
+esac
