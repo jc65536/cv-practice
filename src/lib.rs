@@ -6,7 +6,7 @@ use numpy::ndarray::*;
 use numpy::*;
 use pyo3::prelude::*;
 
-const THREADS: i32 = 16;
+const THREADS: i32 = 8;
 
 fn _convolve(img: ArrayView3<u8>, kernel: ArrayView2<f64>) -> Array3<u8> {
     let img = img.mapv(f64::from);
@@ -33,7 +33,7 @@ fn _convolve(img: ArrayView3<u8>, kernel: ArrayView2<f64>) -> Array3<u8> {
         for _ in 0..THREADS {
             let result = result_arc.clone();
             let kernel_iter = kernel_iter.clone();
-            let img = img.clone();
+            let img = &img;
 
             scope.spawn(move || {
                 let mut local_sum = zero_buf();
@@ -41,23 +41,13 @@ fn _convolve(img: ArrayView3<u8>, kernel: ArrayView2<f64>) -> Array3<u8> {
                 while let Some(((i, j), k)) = kernel_iter.lock().unwrap().next() {
                     local_sum
                         .slice_mut(s![i..i + img_h, j..j + img_w, ..])
-                        .add_assign(&(*k * &img));
+                        .add_assign(&(*k * img));
                 }
 
                 result.lock().unwrap().add_assign(&local_sum);
             });
         }
     });
-
-    // let mut result = Array3::<f64>::zeros((img_h + kernel_size_1, img_w + kernel_size_1, 3));
-
-    // for i in 0..kernel_size {
-    //     for j in 0..kernel_size {
-    //         result
-    //             .slice_mut(s![i..i + img_h, j..j + img_w, ..])
-    //             .add_assign(&(kernel[[i, j]] * &img));
-    //     }
-    // }
 
     result
         .slice(s![pad_size..-pad_size, pad_size..-pad_size, ..])
