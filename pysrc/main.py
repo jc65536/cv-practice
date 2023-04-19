@@ -2,6 +2,7 @@
 
 import cv2
 import filters
+import numpy as np
 
 from webcam import Webcam
 from dotenv import dotenv_values
@@ -19,11 +20,10 @@ webcam = Webcam(url)
 
 window = cv2.namedWindow("window")
 
-filter = filters.gaussian(11, 20)
-filter = filters.grad_y
+gx, gy = filters.gaussian_sep(15, 4)
 
 for img in webcam:
-    img = convolve(img, filters.grad_xy) * 4
+    img = filters.convolve_sep(img, gx, gy, 1)
 
     cv2.imshow("window", img)
 

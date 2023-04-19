@@ -10,6 +10,7 @@ case $1 in
         ;;
     
     profile)
-        py-spy record --native -o ignore/profile.svg -- python pysrc/main.py
+        flamegraph -F 600 -o ignore/profile.svg -- ./cmd run
+        rm perf.data
         ;;
 esac
