@@ -48,7 +48,8 @@ def gaussian_sep(size: int, sigma: float):
     gx = factor * np.exp(-x ** 2 / two_sigma_sq)
     gx /= np.sum(gx)
 
-    return gx, gx
+    return gx
+
 
 def convolve(img: np.ndarray, kernel: np.ndarray, _):
     img = img.astype(np.float64)
@@ -70,6 +71,7 @@ def convolve(img: np.ndarray, kernel: np.ndarray, _):
     # Crop to original size
     return result[pad_size:-pad_size, pad_size:-pad_size, :].astype(np.uint8)
 
+
 def convolve_sep(img: np.ndarray, kernel_x: np.ndarray, kernel_y: np.ndarray, _):
     img = img.astype(np.float64)
     kernel_size, = np.shape(kernel_x)
@@ -84,7 +86,7 @@ def convolve_sep(img: np.ndarray, kernel_x: np.ndarray, kernel_y: np.ndarray, _)
 
     for i in range(0, kernel_size):
         result_x[i:i + img_h, :, :] += kernel_x[i] * img
-    
+
     result = np.zeros((img_h + kernel_size_1, img_w + kernel_size_1, 3))
 
     for j in range(0, kernel_size):
@@ -92,4 +94,3 @@ def convolve_sep(img: np.ndarray, kernel_x: np.ndarray, kernel_y: np.ndarray, _)
 
     # Crop to original size
     return result[pad_size:-pad_size, pad_size:-pad_size, :].astype(np.uint8)
-

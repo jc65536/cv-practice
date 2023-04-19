@@ -20,10 +20,10 @@ webcam = Webcam(url)
 
 window = cv2.namedWindow("window")
 
-gx, gy = filters.gaussian_sep(15, 4)
+gx = filters.gaussian_sep(15, 4)
 
 for img in webcam:
-    img = filters.convolve_sep(img, gx, gy, 1)
+    img = filters.convolve_sep(img, gx, gx, 1)
 
     cv2.imshow("window", img)
 
