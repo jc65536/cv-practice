@@ -1,6 +1,8 @@
 import numpy as np
 
-ident = np.array([[0, 0, 0], [0, 1, 0], [0, 0, 0]]).astype(np.float64)
+ident = np.array([[0, 0, 0],
+                  [0, 1, 0],
+                  [0, 0, 0]]).astype(np.float64)
 
 grad_x = np.array([[0, 0, 0],
                    [-1, 1, 0],
