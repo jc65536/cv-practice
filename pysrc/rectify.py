@@ -79,7 +79,7 @@ with Image.open("img/chessboard.jpg") as img:
             xs, ys = to_hetero(coord_src)
             # draw.point((xs, ys))
             try:
-                out_arr[i, j, :] = img.getpixel((xs, ys))
+                out_arr[i, j] = img.getpixel((xs, ys))
             except IndexError:
                 print(f"i: {i}; j: {j}; xs: {xs}; ys: {ys}")
 
