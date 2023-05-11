@@ -92,7 +92,7 @@ def convolve_sep(img: np.ndarray, kernel_x: np.ndarray, kernel_y: np.ndarray, _)
     result = np.zeros((img_h + kernel_size_1, img_w + kernel_size_1, 3))
 
     for j in range(0, kernel_size):
-        result[:, j:j + img_w, :] += kernel_y[i] * result_x
+        result[:, j:j + img_w, :] += kernel_y[j] * result_x
 
     # Crop to original size
     return result[pad_size:-pad_size, pad_size:-pad_size, :].astype(np.uint8)

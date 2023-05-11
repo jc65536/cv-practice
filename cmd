@@ -6,7 +6,7 @@ case $1 in
         ;;
     
     run)
-        pysrc/main.py
+        pysrc/rectify.py
         ;;
     
     profile)
